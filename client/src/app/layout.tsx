@@ -20,8 +20,8 @@ export default function RootLayout({
 }>) {
   return (
     <SessionWrapper>
-      <Analytics />
-      <SpeedInsights />
+      {/* <Analytics />
+      <SpeedInsights /> */}
       <html lang="en">
         <body className={unbounded.className}>
           <div className=" flex flex-col">
