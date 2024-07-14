@@ -3,6 +3,8 @@ import { Unbounded } from "next/font/google";
 import "./globals.css";
 import Header from "../components/Header";
 import SessionWrapper from '../components/SessionWrapper'
+import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const unbounded = Unbounded({ subsets: ["latin"] });
 
@@ -18,6 +20,8 @@ export default function RootLayout({
 }>) {
   return (
     <SessionWrapper>
+      <Analytics />
+      <SpeedInsights />
       <html lang="en">
         <body className={unbounded.className}>
           <div className=" flex flex-col">
