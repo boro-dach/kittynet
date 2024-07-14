@@ -11,9 +11,9 @@ export default function Header() {
         {session ? (
           <div className="flex items-center">
             <div>
-              <p className=" text-sm mr-4">@{session.user?.username}</p>
+              <p className=" text-sm mr-4">привет, @{session.user?.username}!</p>
             </div>
-            <button onClick={() => signOut()} className=" mr-8 px-4 py-2 bg-zinc-50 text-black rounded-xl hover:brightness-50 transition-all duration-200">выйти(</button>
+            <button onClick={() => signOut()} className=" mr-8 px-4 py-2 bg-zinc-950 text-zinc-50 rounded-xl hover:brightness-50 transition-all duration-200">выйти(</button>
           </div>
           
         ) : (

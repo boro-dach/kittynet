@@ -27,7 +27,7 @@ export default function RootLayout({
           <div className=" flex flex-col">
             <div><Header /></div>
             <div className=" flex flex-row justify-between">
-              <div className=" ml-4">{children}</div>
+              <div className=" ml-4 mr-4 w-full max-w-5xl">{children}</div>
               <div className=" sticky top-0">
                 <input type="text" placeholder="искать" className=" rounded-md bg-white focus:outline-none text-sm py-1 px-2 mr-4 text-black"/>
               </div>
