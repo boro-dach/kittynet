@@ -3,8 +3,8 @@ import { Unbounded } from "next/font/google";
 import "./globals.css";
 import Header from "../components/Header";
 import SessionWrapper from '../components/SessionWrapper'
-import Analytics from "../../node_modules/@vercel/analytics";
-import SpeedInsights from "../../node_modules/@vercel/speed-insights"
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const unbounded = Unbounded({ subsets: ["latin"] });
 
