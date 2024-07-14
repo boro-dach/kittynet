@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Unbounded } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
-import SessionWrapper from '@/components/SessionWrapper'
+import Header from '../components/Header';
+import SessionWrapper from '../components/SessionWrapper'
 
 const unbounded = Unbounded({ subsets: ["latin"] });
 
