@@ -5,7 +5,6 @@ import Link from "next/link";
 
 export default function Header() {
   const { data: session } = useSession();
-  console.log(session);
   return (
     <header className=" h-16 m-4 bg-zinc-900 rounded-xl flex justify-between items-center">
         <Link href='/'><h1 className=" ml-8 font-bold text-2xl ">kittynet</h1></Link>

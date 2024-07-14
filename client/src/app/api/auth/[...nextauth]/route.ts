@@ -13,12 +13,13 @@ const handler = NextAuth({
 
     callbacks: {
         async session({ session, token }) {
-            if (session.user?.name) {
-                session.user.username = session.user.name.split(' ').join('').toLocaleLowerCase();
-                session.user.uid = token.sub;
+            if (!session.user || !token.sub) {
+                throw new Error('session or token undefined')
+                
             }
             else {
-                throw new Error('session undefined')
+                session.user.username = session.user.name?.split(' ').join('').toLocaleLowerCase();
+                session.user.uid = token.sub;
             }
             
             return session;
