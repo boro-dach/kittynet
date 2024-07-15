@@ -1,6 +1,7 @@
 "use client"
 
 import { app } from "@/firebase";
+import { addDoc, collection, getFirestore, serverTimestamp } from "firebase/firestore/lite";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useSession } from "next-auth/react"
 import { ChangeEvent, useEffect, useRef, useState } from "react";
@@ -11,7 +12,10 @@ export default function Input() {
     const [imageFileUrl, setImageFileUrl] = useState <string | null> (null)
     const [selectedFile, setSelectedFile] = useState <File | null> (null)
     const [imageFileUploading, setImageFileUploading] = useState <boolean> (false)
+    const [text, setText] = useState <string> ('')
+    const [postLoading, setPostLoading] = useState <boolean> (false)
     const imagePickRef = useRef <HTMLInputElement | null> (null);
+    const db = getFirestore(app);
     const addImageToPost = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
@@ -55,17 +59,36 @@ export default function Input() {
         )
     };
 
+    const handleSubmit = async () => {
+        setPostLoading(true);
+        const docRef = await addDoc(collection(db, 'posts'), {
+            uid: session?.user.uid,
+            username: session?.user.username,
+            text,
+            Timestamp: serverTimestamp()
+        });
+        setPostLoading(false);
+        setText('');
+        setImageFileUrl(null);
+        setSelectedFile(null);
+    }
+
     if (!session) return null;
   return (
     <div className="w-full">
         <textarea 
+            value={text}
+            onChange={(e) => setText(e.target.value)}
             placeholder="пиши" 
             rows={2} 
             className=" bg-white text-black  w-full rounded-md outline-none indent-2"
         />
         {
             selectedFile && imageFileUrl && (
-                <img src={imageFileUrl} alt="image" className="w-full max-h-[256px] object-cover cursor-pointer rounded-md" />
+                <img
+                    src={imageFileUrl} 
+                    alt="image" 
+                    className={`w-full max-h-[256px] object-cover cursor-pointer rounded-md ${imageFileUploading ? 'animate-pulse' : ''}`} />
             )
         }
         <div className="flex flex-row justify-between items-center mt-2">
@@ -80,7 +103,11 @@ export default function Input() {
                 accept="image/*" 
                 onChange={addImageToPost}
             />
-            <button className=" border border-zinc-800 p-2 rounded-md text-sm bg-zinc-900 hover:brightness-50 transition-all duration-300">
+            <button
+                disabled={text.trim() === '' || postLoading || imageFileUploading} 
+                onClick={handleSubmit}
+                className=" border border-zinc-800 p-2 rounded-md text-sm bg-zinc-900 hover:brightness-50 transition-all duration-300"
+                >
                 Отправить
             </button>
         </div>
